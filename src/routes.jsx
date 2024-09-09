@@ -4,10 +4,11 @@ import {
   TableCellsIcon,
   InformationCircleIcon,
   ServerStackIcon,
-  RectangleStackIcon,
+  RectangleStackIcon,ArrowLeftOnRectangleIcon
 } from "@heroicons/react/24/solid";
 import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
+
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -49,11 +50,12 @@ export const routes = [
     pages: [
  
       {
-        icon: <RectangleStackIcon {...icon} />,
-        name: "Disconnect",
-        path: "/sign-up",
-        element: <SignUp />,
+        icon: <ArrowLeftOnRectangleIcon  {...icon} />,
+        name: "Déconnexion",
+        path: "/sign-in",
+        element: <SignIn />,
       },
+     
     ],
   },
 ];

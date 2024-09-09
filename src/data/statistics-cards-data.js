@@ -18,7 +18,7 @@ export const statisticsCardsData = [
     },
   },
   {
-    color: "gray",
+    color: "blue",
     icon: BanknotesIcon,
     title: "",
     value: "$53k",

@@ -47,7 +47,7 @@ export function DashboardNavbar() {
       {/*debut barre de selection */}
 
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
-      <div className="w-full">
+      <div className="w-3/4">
       <Select label={<h2>Selectionner une campagne</h2>}>
         <Option>Material Tailwind HTML</Option>
         <Option>Material Tailwind React</Option>
@@ -60,7 +60,7 @@ export function DashboardNavbar() {
      {/*Fin barre de selection */}
 
     <div className="mr-auto md:mr-4 md:w-56">
-          <h3 className=" text-blue-gray-500">Dernieres modifications  : Nom Prenom <br/> 1/1/24 a 10:39</h3> 
+          <h3 className=" text-blue-gray-500">Dernieres modifications  <br/> 1/1/24 a 10:39</h3> 
           </div>
 
       </div>
