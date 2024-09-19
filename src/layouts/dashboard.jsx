@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Cog6ToothIcon  } from "@heroicons/react/24/solid";
+import { Cog6ToothIcon, PlusIcon  } from "@heroicons/react/24/solid";
 
 
 import { IconButton } from "@material-tailwind/react";
@@ -34,7 +34,7 @@ export function Dashboard() {
           ripple={false}
           onClick={() => setOpenConfigurator(dispatch, true)}
         >
-          <Cog6ToothIcon className="h-5 w-5" />
+          <PlusIcon className="h-7 w-7" />
         </IconButton>
         <Routes>
           {routes.map(

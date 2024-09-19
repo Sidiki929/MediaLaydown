@@ -17,6 +17,8 @@ import {
   setSidenavType,
   setFixedNavbar,
 } from "@/context";
+import TextField from '@mui/material/TextField';
+
 
 
 const Product = [
@@ -261,7 +263,15 @@ export function Configurator() {
     red: "from-red-400 to-red-600",
     pink: "from-pink-400 to-pink-600",
   };
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedChannel, setSelectedChannel] = useState("");
 
+  // Fonction pour obtenir les mois basés sur le produit et le canal sélectionnés
+  const getMonths = () => {
+    const selectedProductData = Product.find(p => p.name === selectedProduct);
+    const selectedChannelData = selectedProductData?.channels.find(c => c.channel === selectedChannel);
+    return selectedChannelData ? selectedChannelData.months : [];
+  };
   React.useEffect(() => {
     const stars = fetch(
       "https://api.github.com/repos/creativetimofficial/material-tailwind-dashboard-react"
@@ -305,7 +315,7 @@ export function Configurator() {
   
       <select
         className="mt-5 w-full border border-gray-300 rounded p-2"
-        onChange={(e) => setActiveChannel(e.target.value)}
+        onChange={(e) => setSelectedChannel(e.target.value)}
       >
         <option value="">Sélectionner une chaîne</option>
         {selectedProduct && 
@@ -315,26 +325,23 @@ export function Configurator() {
             </option>
           ))}
       </select>
+
+      <select
+  className="mt-5 w-full border border-gray-300 rounded p-2"
+  onChange={(e) => setSelectedMonth(e.target.value)}
+  disabled={!selectedChannel} // Désactiver si aucune chaîne n'est sélectionnée
+>
+  <option value="">Sélectionner un mois</option>
+  {selectedChannel && getMonths().map(month => (
+    <option key={month.month} value={month.month}>
+      {month.month}
+    </option>
+  ))}
+</select>
   
-      <Input
-        size="lg"
-        placeholder="Période"
-        className="!border-t-blue-gray-200 focus:!border-t-gray-900 mt-5"
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
-      />
-  
-      <Input
-        type="number"
-        size="lg"
-        placeholder="Net"
-        className="!border-t-blue-gray-200 focus:!border-t-gray-900 mt-10"
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
-      />
-      
+     
+ <input type="number"  placeholder="Exemple 1500..." className=" mt-5 w-full border border-gray-300 rounded p-2 bg-gray-200 w-full text-black"/>
+   
       <select
         className="mt-5 w-full border border-gray-300 rounded p-2"
         onChange={(e) => setFunnel(e.target.value)}
