@@ -28,7 +28,6 @@ const Product = [
     channels: [
       {
         channel: "YouTube",
-        funnel:"Awareness",
         months: [
           { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
           { month: "February", net: 12398, edgeFee:1240 , setupFees:  800     ,funnel:"Awareness",},
@@ -41,7 +40,7 @@ const Product = [
           { month: "September", net: 30000, edgeFee: 3000  , setupFees:800     ,funnel:"Awareness",},
           { month: "October", net: 20000, edgeFee: 2000 , setupFees:800    ,funnel:"Awareness", },
           { month: "November", net: 30000, edgeFee: 3000 , setupFees:800     ,funnel:"Awareness",},
-          { month: "December", net: 10000, edgeFee: 1000 , setupFees:800     ,funnel:"Awareness", }
+          { month: "December-Janvier", net: 10000, edgeFee: 1000 , setupFees:800     ,funnel:"Awareness", }
         ]
       },
       {
@@ -676,10 +675,17 @@ const [age, setAge] = useState("SpeedStyle");
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
       <div className="mr-auto md:mr-4 md:w-56">
-          <h3 className=" text-black font-semibold text-3xl">MediaLayDown <div>
+          <h3 className=" text-black font-semibold text-3xl"> <div>
 
     </div>  </h3> 
           </div>
+          <div>
+          <div className="mr-auto md:mr-4 md:w-56 flex justify-between">
+          <h3 className="  text-black text-xl">Statut :      <b className=" text-orange-600  text-lg">En cours..  </b>   </h3> 
+          </div>
+          <h3 className="  text-black text-sm ">Date de fin : <b className="text-red-600">28 Nov. 2024</b>   </h3> 
+          </div>
+         
     <div className="mr-auto md:mr-4 md:w-56">
           <h3 className=" text-blue-gray-500">Dernieres modifications  <br/> 1/1/24 a 10:39</h3> 
           </div>
@@ -784,7 +790,7 @@ const [age, setAge] = useState("SpeedStyle");
                   variant="small"
                   className="text-lg text-left mt=10 font-medium "
                 >
-               Ensemble des channels pour le produit <b className="text-red-500">{age}</b>
+              
   </Typography>
     <BarChart
       title={ <h2>Ensemble des channels pour le produit <b className="text-red-500">{age}</b></h2>}

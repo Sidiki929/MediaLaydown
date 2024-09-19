@@ -24,7 +24,7 @@ export const routes = [
         path: "/home",
         element: <Home />,
       },
-      {
+     /*  {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
         path: "/profile",
@@ -41,7 +41,7 @@ export const routes = [
         name: "notifications",
         path: "/notifications",
         element: <Notifications />,
-      },
+      }, */
     ],
   },
   {
