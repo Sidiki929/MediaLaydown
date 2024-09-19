@@ -3,28 +3,39 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Typography,
+  Typography
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
+import Chip from '@mui/material/Chip';
 
-export function StatisticsCard({ color, icon, title, value, footer }) {
+export function StatisticsCard({ color, icon, title, value, footer,funnel }) {
+
+ 
   return (
-    <Card className="border border-blue-gray-100 shadow-sm">
+    <Card className="border border-blue-gray-100 shadow-md  justify-between ">
+     
       <CardHeader
         variant="gradient"
         color={color}
         floated={false}
         shadow={false}
-        className="absolute grid h-12 w-12 place-items-center"
+        className="absolute  h-20 w-20 mr-0  place-items-start"
       >
-        {icon}
+       {icon}
       </CardHeader>
       <CardBody className="p-4 text-right">
-        <Typography variant="small" className="font-normal text-blue-gray-600">
+        <Typography variant="large" className="font-normal text-blue-gray-600">
           {title}
         </Typography>
         <Typography variant="h4" color="blue-gray">
-          {value}
+          {value} 
+        </Typography>
+        <Typography variant="h5" color="blue-gray">
+        <Chip 
+      label={funnel} 
+    
+      color={ funnel === "Consideration" ? "success" : "error" } 
+    />
         </Typography>
       </CardBody>
       {footer && (

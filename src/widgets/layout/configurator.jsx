@@ -1,4 +1,4 @@
-import React from "react";
+import React ,{useState} from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Button,
@@ -18,6 +18,208 @@ import {
   setFixedNavbar,
 } from "@/context";
 
+
+const Product = [
+  {
+    id: 1,
+    campain: "Shark Beauty",
+    name: "SpeedStyle",
+    channels: [
+      {
+        channel: "YouTube",
+        funnel:"Awareness",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "February", net: 12398, edgeFee:1240 , setupFees:  800     ,funnel:"Awareness",},
+          { month: "March", net: 12398, edgeFee:1240 , setupFees:  800    ,funnel:"Awareness", },
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0    ,funnel:"Awareness", },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "September", net: 30000, edgeFee: 3000  , setupFees:800     ,funnel:"Awareness",},
+          { month: "October", net: 20000, edgeFee: 2000 , setupFees:800    ,funnel:"Awareness", },
+          { month: "November", net: 30000, edgeFee: 3000 , setupFees:800     ,funnel:"Awareness",},
+          { month: "December", net: 10000, edgeFee: 1000 , setupFees:800     ,funnel:"Awareness", }
+        ]
+      },
+      {
+        channel: "Paid Social",
+       
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration"},
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600  ,funnel:"Consideration"   },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600  ,funnel:"Consideration" },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 ,funnel:"Consideration" },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration" },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 ,funnel:"Consideration" },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 ,funnel:"Consideration" },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 ,funnel:"Consideration" },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600  ,funnel:"Consideration"   },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0   ,funnel:"Consideration"  },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  ,funnel:"Consideration" },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  ,funnel:"Consideration" },
+          
+    
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    campain: "Shark Beauty",
+    name: "FlexStyle",
+    channels: [
+      {
+        channel: "TV",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "May", net:{ item1: 343640 }, edgeFee: 16185, setupFees: 0    ,funnel:"Awareness", },
+          { month: "June", net:{ item1: 391101 }, edgeFee: 18421, setupFees: 0     ,funnel:"Awareness", },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "September", net: {item1: 520000 }, edgeFee: 24492  , setupFees:0     ,funnel:"Awareness",},
+          { month: "October", net: {item1: 520000 }, edgeFee: 24492  , setupFees:0     ,funnel:"Awareness", },
+          { month: "November", net: {item1: 520000 }, edgeFee: 24492  , setupFees:0     ,funnel:"Awareness",},
+          { month: "December", net: {item1: 520000 }, edgeFee: 24492  , setupFees:0     ,funnel:"Awareness", }
+        ]
+      },
+      {
+        channel: "BVOD",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",  },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "September", net: { item1:  44000  }, edgeFee: 4400 , setupFees:800      ,funnel:"Awareness",},
+          { month: "October",   net: { item1:  45000  }, edgeFee: 4500 , setupFees:800        ,funnel:"Awareness",},
+          { month: "November",  net: { item1:  110000  }, edgeFee: 11000, setupFees:  800      ,funnel:"Awareness",},
+          { month: "December",  net: { item1:  60000 }, edgeFee: 6000, setupFees:  800     ,funnel:"Awareness", },
+        ]
+      },
+      {
+        channel: "OPS",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",  },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0    ,funnel:"Awareness", },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "September",net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "October", net: 0, edgeFee: 0, setupFees: 0      ,funnel:"Awareness", },
+          { month: "November", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "December", net: { item1:  93000  }, edgeFee: 0, setupFees:  0     ,funnel:"Awareness", },
+        ]
+      },
+      {
+        channel: "YouTube",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0    ,funnel:"Awareness", },
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0      ,funnel:"Awareness", },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0    ,funnel:"Awareness", },
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "May", net: { item1:  31461 , item2: 0 , item3:0 }, edgeFee: 3146 , setupFees:800     ,funnel:"Awareness",  },
+          { month: "June", net: { item1:  27070 , item2: 0 , item3:0 }, edgeFee: 27070 , setupFees:800     ,funnel:"Awareness",  },
+          { month: "July", net: { item1:  28333 , item2: 0 , item3:0 }, edgeFee: 2833 , setupFees:800     ,funnel:"Awareness", },
+          { month: "August", net: { item1:  28333 , item2: 0 , item3:0 }, edgeFee: 2833 , setupFees:800     ,funnel:"Awareness",},
+          { month: "September",net: { item1:  28333 , item2: 0 , item3:0 }, edgeFee: 2833 , setupFees:800     ,funnel:"Awareness",  },
+          { month: "October", net: { item1:  18350 , item2: 0 , item3:0 }, edgeFee: 1835, setupFees:800     ,funnel:"Awareness",  },
+          { month: "November", net: { item1:  35000 , item2: 0 , item3:0 }, edgeFee: 3500, setupFees:  0    ,funnel:"Awareness",  },
+          { month: "December", net: { item1:  25000 , item2: 0 , item3:0 }, edgeFee: 2500, setupFees:  800     ,funnel:"Awareness",  },
+        ]
+      },
+      {
+        channel: "Paid Social",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration"},
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration"  },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration"},
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration"},
+          { month: "May", net: { item1:   60886 , item2: 15178 , item3:0 }, edgeFee:  7606 , setupFees:1600  ,funnel:"Consideration"  },
+          { month: "June", net: { item1:   40505 , item2:  19551 , item3:0 }, edgeFee:  6006 , setupFees:0   ,funnel:"Consideration"},
+          { month: "July", net: { item1:   31500 , item2: 23985 , item3:10000 }, edgeFee: 6549 , setupFees:2400 ,funnel:"Consideration" },
+          { month: "August", net: { item1:  31500 , item2: 9985 , item3:10000 }, edgeFee: 5149 , setupFees:0  ,funnel:"Consideration"},
+          { month: "September", net: { item1:  31500 , item2: 9985 , item3:15000 }, edgeFee: 5649 , setupFees:800   ,funnel:"Consideration" },
+          { month: "October", net: { item1:  36000 , item2: 11000 , item3:10000 }, edgeFee: 5700, setupFees:0   ,funnel:"Consideration" },
+          { month: "November", net: { item1:  45000 , item2: 20000 , item3:20000 }, edgeFee: 8500, setupFees:  2400  ,funnel:"Consideration" },
+          { month: "December", net: { item1:  34500 , item2: 11000 , item3:15000 }, edgeFee: 6050, setupFees:  0  ,funnel:"Consideration" },
+       ]
+      },
+      {
+        channel: "Premium NetWork",
+     
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0    ,funnel:"Awareness",    },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0    ,funnel:"Awareness", },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "September", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",  },
+          { month: "October",net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "November", net: { item1:  26500  }, edgeFee: 2650, setupFees:  800      ,funnel:"Awareness",},
+          { month: "December", net: { item1:  17500  }, edgeFee: 1750, setupFees:  0     ,funnel:"Awareness",  },
+        ]
+      },
+      {
+        channel: "Summer of Sport copy",
+    
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0      ,funnel:"Awareness",  },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "June", net: { item1:  22000 , item2: 4700  }, edgeFee: 2670, setupFees:  1600     ,funnel:"Awareness", },
+          { month: "July", net: { item1:  20000 , item2: 4700  }, edgeFee: 2470, setupFees:  0     ,funnel:"Awareness",},
+          { month: "August", net: { item1:  20000 , item2: 4700  }, edgeFee: 2470, setupFees:  0     ,funnel:"Awareness",  },
+          { month: "September",net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",  },
+          { month: "October", net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness", },
+          { month: "November",net: 0, edgeFee: 0, setupFees: 0     ,funnel:"Awareness",},
+          { month: "December", net: 0, edgeFee: 0, setupFees: 0       ,funnel:"Awareness",},
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    campain: "Shark Beauty",
+    name: "Orchid",
+    channels: [ 
+      {
+        channel: "Paid Social",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration", },
+          { month: "February", net: 0, edgeFee: 0, setupFees: 0 ,funnel:"Consideration", },
+          { month: "March", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration", },
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration", },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration", },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration",},
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration",},
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0  ,funnel:"Consideration",},
+          { month: "September",  net: 0, edgeFee: 0, setupFees: 0   ,funnel:"Consideration",  },
+          { month: "October",  net: 0, edgeFee: 0, setupFees: 0   ,funnel:"Consideration", },
+          { month: "November", net: { item1:  26000 , item2: 24000  }, edgeFee: 5000, setupFees:  1600  ,funnel:"Consideration",  },
+          { month: "December", net: { item1:  20000 , item2: 19455 }, edgeFee: 3945, setupFees:  0  ,funnel:"Consideration",  },
+          
+    
+        ]
+      }
+    ]
+  }
+];
 function formatNumber(number, decPlaces) {
   decPlaces = Math.pow(10, decPlaces);
 
@@ -44,6 +246,8 @@ function formatNumber(number, decPlaces) {
 }
 
 export function Configurator() {
+  const [selectedProduct, setSelectedProduct] = useState('');
+
   const [controller, dispatch] = useMaterialTailwindController();
   const { openConfigurator, sidenavColor, sidenavType, fixedNavbar } =
     controller;
@@ -68,87 +272,90 @@ export function Configurator() {
 
   return (
     <aside
-      className={`fixed top-0 right-0 z-50 h-screen w-96 bg-white px-2.5 shadow-lg transition-transform duration-300 ${
-        openConfigurator ? "translate-x-0" : "translate-x-96"
-      }`}
-    >
-      <div className="flex items-start justify-between px-6 pt-8 pb-6">
-        <div>
-          <Typography variant="h4" color="blue-gray">
-            Ajouter un nouveau
-          </Typography>
-       
-        </div>
-        <IconButton
-          variant="text"
-          color="blue-gray"
-          onClick={() => setOpenConfigurator(dispatch, false)}
-        >
-          <XMarkIcon strokeWidth={2.5} className="h-5 w-5" />
-        </IconButton>
+    className={`fixed top-0 right-0 z-50 h-screen w-96 bg-white px-2.5 shadow-lg transition-transform duration-300 ${
+      openConfigurator ? "translate-x-0" : "translate-x-96"
+    }`}
+  >
+    <div className="flex items-start justify-between px-6 pt-8 pb-6">
+      <div>
+        <Typography variant="h4" color="blue-gray">
+          Ajouter un nouveau
+        </Typography>
       </div>
-      <div className="py-4 px-6">
+      <IconButton
+        variant="text"
+        color="blue-gray"
+        onClick={() => setOpenConfigurator(dispatch, false)}
+      >
+        <XMarkIcon strokeWidth={2.5} className="h-5 w-5" />
+      </IconButton>
+    </div>
+    <div className="py-4 px-6">
+      <select
+        className="mt-2 w-full border border-gray-300 rounded p-2"
+        onChange={(e) => setSelectedProduct(e.target.value)}
+      >
+        <option value="">Sélectionner un produit</option>
+        {Product.map((product) => (
+          <option key={product.id} value={product.name}>
+            {product.name}
+          </option>
+        ))}
+      </select>
+  
+      <select
+        className="mt-5 w-full border border-gray-300 rounded p-2"
+        onChange={(e) => setActiveChannel(e.target.value)}
+      >
+        <option value="">Sélectionner une chaîne</option>
+        {selectedProduct && 
+          Product.find((p) => p.name === selectedProduct)?.channels.map((channel) => (
+            <option key={channel.channel} value={channel.channel}>
+              {channel.channel}
+            </option>
+          ))}
+      </select>
+  
       <Input
-      size="lg"
-      placeholder="Produit"
-      className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-      labelProps={{
-        className: "before:content-none after:content-none",
-      }}
-    />
-
-    <Input
-    size="lg"
-    placeholder="Channel"
-    className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mt-5"
-    labelProps={{
-      className: "before:content-none after:content-none",
-    }}
-  />
-  <Input
-  size="lg"
-  placeholder="Period"
-  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mt-10"
-  labelProps={{
-    className: "before:content-none after:content-none",
-  }}
-/><br/>
-<Input
-type="number"
-  size="lg"
-  placeholder="Net"
-  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mt-10"
-  labelProps={{
-    className: "before:content-none after:content-none",
-  }}
-/>
-<br/><br/>
-        <div className="mt-10">
-          
-          <div className="my-8 flex flex-col gap-4">
-            <a
-              href="https://www.creative-tim.com/product/material-tailwind-dashboard-react?rel=mtdr"
-              target="_black"
-            >
-              <Button variant="gradient" fullWidth>
-                Show
-              </Button>
-            </a>
-            <a
-              href="https://www.material-tailwind.com/docs/react/installation?rel=mtdr"
-              target="_black"
-            >
-              <Button variant="outlined" color="blue-gray" fullWidth>
-              Apply
-              </Button>
-            </a>
-            
-          </div>
-       
-        </div>
+        size="lg"
+        placeholder="Période"
+        className="!border-t-blue-gray-200 focus:!border-t-gray-900 mt-5"
+        labelProps={{
+          className: "before:content-none after:content-none",
+        }}
+      />
+  
+      <Input
+        type="number"
+        size="lg"
+        placeholder="Net"
+        className="!border-t-blue-gray-200 focus:!border-t-gray-900 mt-10"
+        labelProps={{
+          className: "before:content-none after:content-none",
+        }}
+      />
       
+      <select
+        className="mt-5 w-full border border-gray-300 rounded p-2"
+        onChange={(e) => setFunnel(e.target.value)}
+      >
+        <option value="">Sélectionner un funnel</option>
+        <option value="Consideration">Consideration</option>
+        <option value="Awareness">Awareness</option>
+      </select>
+  
+      <div className="mt-10">
+        <div className="my-8 flex flex-col gap-4">
+          <Button variant="gradient" fullWidth>
+            Show
+          </Button>
+          <Button variant="outlined" color="blue-gray" fullWidth>
+            Apply
+          </Button>
+        </div>
       </div>
-    </aside>
+    </div>
+  </aside>
   );
 }
 

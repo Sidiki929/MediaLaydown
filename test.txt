@@ -1,0 +1,466 @@
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import {
+  Navbar,
+  Option,Select,
+} from "@material-tailwind/react";
+import Box from '@mui/material/Box';
+import { PieChart } from '@mui/x-charts/PieChart';
+import {
+  useMaterialTailwindController,} from "@/context";
+import {Typography,} from "@material-tailwind/react";
+import { StatisticsCard } from "@/widgets/cards";
+import { BarChart } from '@mui/x-charts/BarChart';
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
+
+
+
+ const mobileOS = [
+  {
+    label: 'YouTube',
+    value: 70.48,
+  },
+  {
+    label: 'PaidSocial',
+    value: 28.8,
+  },
+  {
+    label: 'Orchid',
+    value: 57,
+  },
+];
+
+ const platforms = [
+  {
+    label: 'Mobile',
+    value: 59.12,
+  },
+  {
+    label: 'Desktop',
+    value: 40.88,
+  },
+];
+
+const normalize = (v, v2) => Number.parseFloat(((v * v2) / 100).toFixed(2));
+
+ const mobileAndDesktopOS = [
+  ...mobileOS.map((v) => ({
+    ...v,
+    label: v.label === 'Other' ? 'Other (Mobile)' : v.label,
+    value: normalize(v.value, platforms[0].value),
+  })),
+  
+];
+const valueFormatter = (item) => {
+  return `${item.value}%`;
+};
+
+//Card 
+const Product = [
+  {
+    id: 1,
+    campain: "Shark Beauty",
+    name: "SpeedStyle",
+    channels: [
+      {
+        channel: "YouTube",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "February", net: 12398, edgeFee:1240 , setupFees:  800},
+          { month: "March", net: 12398, edgeFee:1240 , setupFees:  800 },
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: 30000, edgeFee: 3000  , setupFees:800 },
+          { month: "October", net: 20000, edgeFee: 2000 , setupFees:800 },
+          { month: "November", net: 30000, edgeFee: 3000 , setupFees:800 },
+          { month: "December", net: 10000, edgeFee: 1000 , setupFees:800 }
+        ]
+      },
+      {
+        channel: "Paid Social",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+          
+    
+        ]
+      }
+    ]
+  }
+];
+const ProductCampagne2 = [
+  {
+    id: 2,
+    campain: "Shark Beauty",
+    name: "FlexStyle",
+    channels: [
+      {
+        channel: "TV",
+        months: [
+          { month: "January", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "February", net: 12398, edgeFee:1240 , setupFees:  800},
+          { month: "March", net: 12398, edgeFee:1240 , setupFees:  800 },
+          { month: "April", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: 30000, edgeFee: 3000  , setupFees:800 },
+          { month: "October", net: 20000, edgeFee: 2000 , setupFees:800 },
+          { month: "November", net: 30000, edgeFee: 3000 , setupFees:800 },
+          { month: "December", net: 10000, edgeFee: 1000 , setupFees:800 }
+        ]
+      },
+      {
+        channel: "BVOD",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+        ]
+      },
+      {
+        channel: "OPS",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+        ]
+      },
+      {
+        channel: "YouTube",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+        ]
+      },
+      {
+        channel: "Paid Social",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+        ]
+      },
+      {
+        channel: "Premium NetWork",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+        ]
+      },
+      {
+        channel: "Summer of Sport copy",
+        months: [
+          { month: "January", net: 0, edgeFee: 800, setupFees: 0 },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, edgeFee:3542 , setupFees:1600    },
+          { month: "March", net: { item1:  16119 , item2: 19300 , item3:0 }, edgeFee: 3542, setupFees:   1600 },
+          { month: "April", net: { item1:   15725 , item2:  19463 , item3:0 }, edgeFee:  3519, setupFees:   1600 },
+          { month: "May", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "June", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "July", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "August", net: 0, edgeFee: 0, setupFees: 0 },
+          { month: "September", net: { item1:  37000 , item2: 25000 , item3:0 }, edgeFee: 6200 , setupFees:1600    },
+          { month: "October", net: { item1:  37000 , item2: 23700 , item3:0 }, edgeFee: 6070, setupFees:0    },
+          { month: "November", net: { item1:  45000 , item2: 25000 , item3:10000 }, edgeFee: 8000, setupFees:  2400  },
+          { month: "December", net: { item1:  30000 , item2: 10000 , item3:8000 }, edgeFee: 4800, setupFees:  0  },
+        ]
+      }
+    ]
+  }
+];
+const Product123 = [
+  {
+    id: 1,
+    campain: "Shark Beauty",
+    name: "SpeedStyle",
+    channels: [
+      {
+        channel: "YouTube",
+        months: [
+          { month: "January", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "February", net: 12398, icon: "NetIcon", footer: { color: "text-green-500", value: "+5%", label: "compared to last month" } },
+          { month: "March", net: 12398, icon: "NetIcon", footer: { color: "text-green-500", value: "+10%", label: "compared to last month" } },
+          { month: "April", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "May", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "June", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "July", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "August", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "September", net: 30000, icon: "NetIcon", footer: { color: "text-red-500", value: "-2%", label: "compared to last month" } },
+          { month: "October", net: 20000, icon: "NetIcon", footer: { color: "text-red-500", value: "-2%", label: "compared to last month" } },
+          { month: "November", net: 30000, icon: "NetIcon", footer: { color: "text-red-500", value: "-2%", label: "compared to last month" } },
+          { month: "December", net: 10000, icon: "NetIcon", footer: { color: "text-red-500", value: "-2%", label: "compared to last month" } }
+        ]
+      },
+      {
+        channel: "Paid Social",
+        months: [
+          { month: "January", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "February", net: { item1:  16118 , item2: 19297 , item3:0 }, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "March", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "April", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "May", net: 124, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "June", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "July", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "August", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "September", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "October", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "November", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } },
+          { month: "December", net: 0, icon: "NetIcon", footer: { color: "text-gray-500", value: "N/A", label: "no data" } }
+        ]
+      }
+    ]
+  }
+];
+
+export function Home() {
+
+  const [ state , setState] = useState(false)
+
+  const [radius, setRadius] = React.useState(50);
+  const [itemNb, setItemNb] = React.useState(5);
+
+ function calculateTotalNetByChannel(channelName) {
+  const channel = Product[0].channels.find(c => c.channel === channelName);
+  
+  if (!channel) {
+    return { totals: [], sum: 0 };
+  }
+
+  const totals = channel.months.map(month => ({
+    month: month.month,
+    totalNet: month.net
+  }));
+
+  const sum = totals.reduce((acc, curr) => acc + curr.totalNet, 0);
+
+  return { totals, sum };
+}
+
+const ChannelTotals = ({ channelName }) => {
+  const { totals, sum } = calculateTotalNetByChannel(channelName);
+
+  return (
+    <div>
+      <h2>{channelName} Totals</h2>
+    
+      <h3>Total Sum: {sum}</h3>
+    </div>
+  );
+};
+  const [controller, dispatch] = useMaterialTailwindController();
+  const { fixedNavbar, openSidenav } = controller;
+  const { pathname } = useLocation();
+
+
+const calculateNetData = (channel) =>
+  channel.months.map(
+    ({ net, edgeFee = 0, setupFees = 0 }) => {
+      if (typeof net === 'object') {
+        return Object.values(net).reduce((acc, val) => acc + val, 0) + edgeFee + setupFees;
+      }
+      return net + edgeFee + setupFees;
+    }
+  );
+
+
+const youtubeNetData = calculateNetData(Product[0].channels[0]);
+const paidSocialNetData = calculateNetData(Product[0].channels[1]);
+
+ 
+  return (
+    <div >
+   <Navbar
+      color={fixedNavbar ? "white" : "transparent"}
+      className={`rounded-xl transition-all ${
+        fixedNavbar
+          ? "sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"
+          : "px-0 py-1"
+      }`}
+      fullWidth
+      blurred={fixedNavbar}
+    >
+      <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
+ 
+    
+      <div className="mr-auto md:mr-4 md:w-56">
+          <h3 className=" text-black font-semibold text-3xl">MediaLayDown  </h3> 
+          </div>
+
+    <div className="mr-auto md:mr-4 md:w-56">
+          <h3 className=" text-blue-gray-500">Dernieres modifications  <br/> 1/1/24 a 10:39</h3> 
+          </div>
+
+      </div>
+    </Navbar>
+    <Navbar
+      color={fixedNavbar ? "white" : "transparent"}
+      className={`rounded-xl transition-all ${
+        fixedNavbar
+          ? "sticky top-4 z-40 py-3 shadow-md shadow-blue-gray-500/5"
+          : "px-0 py-1"
+      }`}
+      fullWidth
+      blurred={fixedNavbar}
+    >
+
+      <div className="flex mt-5 flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
+      <div className="w-3/4 bg-white">
+      <Select defaultChecked="Shark Beauty" label={<h2>Selectionner une campagne</h2>}>
+      
+        <Option>Shark Beauty <b>(Default)</b> </Option>
+        <Option>Shark Clean</Option>
+        <Option>Fans</Option>
+      </Select>
+    </div>
+    <div className="w-3/4 bg-white">
+      <Select label={<h2>Selectionner le produit </h2>}>
+        <Option>Material Tailwind HTML</Option>
+        <Option>Material Tailwind React</Option>
+        <Option>Material Tailwind Vue</Option>
+        <Option>Material Tailwind Angular</Option>
+        <Option>Material Tailwind Svelte</Option>
+      </Select>
+    </div>
+      </div>
+    </Navbar>
+    <div className="mt-12">
+    <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+      {Product[0]?.channels[0]?.months
+        ?.filter((p) => p.net !== 0)
+        .map(({ month, net, edgeFee, setupFees }) => (
+          <div key={month} className="relative ">
+            <StatisticsCard className=" bg-red-100"
+              title={month}
+              value={`${net + edgeFee+ setupFees}`}
+              icon={<CheckCircleIcon />}
+            />
+    
+              <div className="absolute px-5 left-0 top-full -mt-7 w-50 p-2 border rounded bg-white shadow-lg transition-opacity duration-300 opacity-100">
+                <strong className="text-green-500">Edge Fee: {edgeFee}</strong><br/>
+              <strong className="text-red-500">Setup Fees: {setupFees}</strong>
+                
+              </div>
+          
+          </div>
+        )) || <div>No data available</div>}
+    </div>
+
+<div className="mb-4 grid grid-cols-1 gap-3 xl:grid-cols-3">
+  <div className="col-span-1 xl:col-span-2">
+  <Typography
+                  as="span"
+                  variant="small"
+                  className="text-lg text-left mt=10 font-medium "
+                >
+                Ensemble des produits par campagne    <ChannelTotals channelName="YouTube" />
+                </Typography>
+    <BarChart
+      title="Monthly Net Data"
+      xAxis={[{ scaleType: 'band', data: [
+        "January", "February", "March", "April", "May", 
+        "June", "July", "August", "September", "October", 
+        "November", "December"
+      ] }]}
+      series={[
+        { name: "YouTube", data: youtubeNetData },
+        { name: "Paid Social", data: paidSocialNetData }
+      ]}
+      width={800}
+      height={600}
+    />
+  </div>
+  
+  <div className="col-span-1 xl:col-span-1">
+    <Box sx={{ width: '100%' }}>
+    <Typography
+            as="span"
+            variant="small"
+            className="text-lg text-left mt=10 font-medium "
+                >
+                Brands totals per products
+                </Typography>
+      <PieChart
+    className="mt-10 mr-32 flex flex-between"
+        height={500}
+        series={[
+          {
+            data: mobileAndDesktopOS.slice(0, itemNb),
+            innerRadius: radius,
+            arcLabel: (params) => params.label ?? '',
+            arcLabelMinAngle: 20,
+            valueFormatter,
+          },
+        ]}
+      />
+      
+    </Box>
+  </div>
+</div>
+  
+    </div>
+    </div>
+  );
+}
+
+export default Home;

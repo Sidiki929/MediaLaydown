@@ -25,7 +25,7 @@ export function Dashboard() {
         }
       />
       <div className="p-4 xl:ml-80">
-        <DashboardNavbar />
+   
         <Configurator />
         <IconButton
           size="lg"
@@ -46,7 +46,7 @@ export function Dashboard() {
           )}
         </Routes>
         <div className="text-blue-gray-600">
-          <Footer />
+         
         </div>
       </div>
     </div>
