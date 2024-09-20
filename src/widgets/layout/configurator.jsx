@@ -1,5 +1,6 @@
 import React ,{useState} from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+//import { DateRangePicker } from 'rsuite';
 import {
   Button,
   IconButton,
@@ -18,9 +19,14 @@ import {
   setFixedNavbar,
 } from "@/context";
 import TextField from '@mui/material/TextField';
-
-
-
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+import { DateRangeCalendar } from '@mui/x-date-pickers-pro/DateRangeCalendar';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import dayjs from 'dayjs'
+import { Calendar } from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 const Product = [
   {
     id: 1,
@@ -265,7 +271,15 @@ export function Configurator() {
   };
   const [selectedMonth, setSelectedMonth] = useState("");
   const [selectedChannel, setSelectedChannel] = useState("");
+  const [selectionRange, setSelectionRange] = useState({
+    startDate: null,
+    endDate: null,
+    key: 'selection',
+  });
 
+  const handleSelect = (ranges) => {
+    setSelectionRange(ranges.selection);
+  };
   // Fonction pour obtenir les mois basés sur le produit et le canal sélectionnés
   const getMonths = () => {
     const selectedProductData = Product.find(p => p.name === selectedProduct);
@@ -282,7 +296,7 @@ export function Configurator() {
 
   return (
     <aside
-    className={`fixed top-0 right-0 z-50 h-screen w-96 bg-white px-2.5 shadow-lg transition-transform duration-300 ${
+    className={`fixed top-0 right-0 z-50 h-screen w-100 bg-white px-2.5 shadow-lg transition-transform duration-300 ${
       openConfigurator ? "translate-x-0" : "translate-x-96"
     }`}
   >
@@ -301,7 +315,7 @@ export function Configurator() {
       </IconButton>
     </div>
     <div className="py-4 px-6">
-      <select
+     {/*  <select
         className="mt-2 w-full border border-gray-300 rounded p-2"
         onChange={(e) => setSelectedProduct(e.target.value)}
       >
@@ -311,54 +325,31 @@ export function Configurator() {
             {product.name}
           </option>
         ))}
-      </select>
-  
-      <select
-        className="mt-5 w-full border border-gray-300 rounded p-2"
-        onChange={(e) => setSelectedChannel(e.target.value)}
-      >
-        <option value="">Sélectionner une chaîne</option>
-        {selectedProduct && 
-          Product.find((p) => p.name === selectedProduct)?.channels.map((channel) => (
-            <option key={channel.channel} value={channel.channel}>
-              {channel.channel}
-            </option>
-          ))}
-      </select>
-
-      <select
-  className="mt-5 w-full border border-gray-300 rounded p-2"
-  onChange={(e) => setSelectedMonth(e.target.value)}
-  disabled={!selectedChannel} // Désactiver si aucune chaîne n'est sélectionnée
->
-  <option value="">Sélectionner un mois</option>
-  {selectedChannel && getMonths().map(month => (
-    <option key={month.month} value={month.month}>
-      {month.month}
-    </option>
-  ))}
-</select>
+      </select> */}
   
      
- <input type="number"  placeholder="Exemple 1500..." className=" mt-5 w-full border border-gray-300 rounded p-2 bg-gray-200 w-full text-black"/>
-   
-      <select
-        className="mt-5 w-full border border-gray-300 rounded p-2"
+  <DateRangePicker
+        ranges={[selectionRange]}
+        onChange={handleSelect}
+      />
+  <select
+        className="mt-5 w-[60%] border border-gray-300 rounded p-2"
         onChange={(e) => setFunnel(e.target.value)}
       >
         <option value="">Sélectionner un funnel</option>
         <option value="Consideration">Consideration</option>
         <option value="Awareness">Awareness</option>
       </select>
+  <input type="number"  placeholder="Exemple 1500..." className=" mt-5 w-[60%] border border-gray-300 rounded p-2 bg-gray-200 w-full text-black"/>
+    
+     
   
       <div className="mt-10">
-        <div className="my-8 flex flex-col gap-4">
-          <Button variant="gradient" fullWidth>
-            Show
+        <div className="my-8 flex  gap-4">
+          <Button variant="gradient" className="mt-5 w-[60%]" >
+          Apply
           </Button>
-          <Button variant="outlined" color="blue-gray" fullWidth>
-            Apply
-          </Button>
+          
         </div>
       </div>
     </div>

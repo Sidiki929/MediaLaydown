@@ -15,6 +15,9 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import { MaterialTailwindControllerProvider } from "@/context";
+import 'react-date-range/dist/styles.css'; // 
+import 'react-date-range/dist/theme/default.css'; 
+import 'rsuite/dist/rsuite-no-reset.min.css';
 import "../public/css/tailwind.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
