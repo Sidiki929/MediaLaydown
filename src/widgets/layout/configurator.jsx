@@ -328,7 +328,7 @@ export function Configurator() {
       </select> */}
   
      
-  <DateRangePicker
+  <DateRangePicker className="w-100 relative"
         ranges={[selectionRange]}
         onChange={handleSelect}
       />
@@ -346,12 +346,21 @@ export function Configurator() {
   
       <div className="mt-10">
         <div className="my-8 flex  gap-4">
-          <Button variant="gradient" className="mt-5 w-[60%]" >
+          <Button   onClick={() => setOpenConfigurator(dispatch, false)} variant="gradient" className="mt-5 w-[60%]" >
           Apply
           </Button>
           
+
         </div>
       </div>
+      <IconButton
+      size="lg" // Use "large" for MUI size prop
+      color="inherit" // Use "inherit" for better color management
+      className="fixed bottom-8 right-8 z-50 rounded-full shadow-lg shadow-blue-gray-900/10"
+    
+    >
+      <XMarkIcon className="h-7 w-7" />
+    </IconButton>
     </div>
   </aside>
   );
